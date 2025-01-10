@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Assurer que le body prend toute la hauteur de l'écran */
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: #fff;
+            margin-right: 20px;
+            border-radius: 50%;  /* Rendre le logo arrondi */
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: background 0.3s;
+        }
+        nav a:hover {
+            background: #575757;
+        }
+        footer {
+            text-align: center;
+            padding: 20px; /* Augmenter la taille du footer */
+            background-color: #333;
+            color: white;
+            position: fixed; /* Fixer le footer en bas de l'écran */
+            bottom: 0; /* Positionner le footer en bas */
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            padding: 20px;
+            flex: 1; /* Permet au conteneur de s'étendre pour remplir l'espace disponible */
+        }
+        .button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background-color: #4cae4c;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="text"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="date"]:focus {
+            border-color: #5cb85c;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" style="background-image: url('/templates/logo.jpg');"></div>
+        <nav>
+            <a href="/classement">Ranking</a>
+            <a href="/statistiques">Statistics</a>
+            <button class="button" onclick="showForms()">Login</button>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Welcome to the aplication tournament</h1>
+        <p>Explore team rankings and statistics.</p>
+        
+        <!-- Insérer l'image dans le body -->
+        <img src="/templates/logo2.png" alt="Logo" style="width: 100px; height: auto; margin: 20px 0;"/>
+
+        <!-- Formulaire de création de compte -->
+        <div class="form-container" id="signupForm" style="display:none;">
+            <h2>Create an account</h2>
+            <form action="/signup" method="post">
+                <div class="form-group">
+                    <label for="fullname">Complete name :</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="new_password">Password :</label>
+                    <input type="password" id="new_password" name="new_password" required>
+                </div>
+                <button class="button" type="submit">Create an account</button>
+            </form>
+        </div>
+
+        <!-- Formulaire de connexion -->
+        <div class="form-container" id="loginForm" style="display:none;">
+            <h2>Administrator Login</h2>
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <label for="username">User name :</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password :</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button class="button" type="submit">Login</button>
+            </form>
+        </div>
+
+        <!-- Tableau des Prochains Matches -->
+        <h2>Upcoming Matches</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Team 1</th>
+                    <th>Team 2</th>
+                    <th>Game Date</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tournoi in tournois %}
+                    {% for jeu in tournoi.jeux %}
+                        <tr>
+                            <td>{{ jeu.team1 }}</td>
+                            <td>{{ jeu.team2 }}</td>
+                            <td>{{ jeu.date }}</td>
+                            <td>{{ jeu.score1 }} - {{ jeu.score2 }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        &copy; 2023 Application tournament. All rights reserved.
+    </footer>
+    
+    <script>
+        function showForms() {
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'block'; // Afficher le formulaire de connexion aussi
+        }
+    </script>
+</body>
+</html>

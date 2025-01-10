@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un Tournoi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .success-message {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            background-color: #5bc0de;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Créer un Tournoi</h2>
+        <form action="/create_tournament" method="post">
+            <div class="form-group">
+                <label for="tournament_name">Nom du tournoi :</label>
+                <input type="text" id="tournament_name" name="tournament_name" required>
+            </div>
+            <div class="form-group">
+                <label for="team_count">Nombre d'équipes :</label>
+                <input type="number" id="team_count" name="team_count" min="2" required>
+            </div>
+            <div class="form-group">
+                <label for="team_names">Noms des équipes (séparés par des virgules) :</label>
+                <input type="text" id="team_names" name="team_names" required>
+            </div>
+            <div class="form-group">
+                <label for="scores">Scores des équipes (séparés par des virgules) :</label>
+                <input type="text" id="scores" name="scores" required>
+            </div>
+            <div class="form-group">
+    <label for="game_date">Date de jeu :</label>
+    <input type="date" id="game_date" name="game_date" required>
+</div>
+            <button type="submit">Créer le Tournoi</button>
+        </form>
+        
+        {% if success %}
+            <div class="success-message">
+                Tournoi créé avec succès !
+                <a class="back-button" href="/">Retourner à l'accueil</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

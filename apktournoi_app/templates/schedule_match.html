@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Planifier un Match</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;  /* Centrer le conteneur */
+            max-width: 500px;  /* Largeur maximale pour le conteneur */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="number"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;  /* Bouton prenant toute la largeur */
+        }
+        button:hover {
+            background-color: #4cae4c;  /* Couleur de survol */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Planifier un Match pour {{ tournament.nom }}</h1>
+        <p>Nombre d'Équipes : {{ tournament.nombre_equipes }}</p>
+        <p>Équipes : {{ tournament.noms_equipes | join(', ') }}</p>
+        <p>Scores : {{ tournament.scores | join(', ') }}</p>
+
+        <form action="{{ url_for('schedule_match', tournament_index=tournament_index) }}" method="post">
+            <div class="form-group">
+                <label for="team1_index">Sélectionnez l'équipe 1 :</label>
+                <select id="team1_index" name="team1_index" required>
+                    {% for team in tournament.noms_equipes %}
+                        <option value="{{ loop.index0 }}">{{ team }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="score1">Score de l'équipe 1 :</label>
+                <input type="number" id="score1" name="score1" required>
+            </div>
+            <div class="form-group">
+                <label for="team2_index">Sélectionnez l'équipe 2 :</label>
+                <select id="team2_index" name="team2_index" required>
+                    {% for team in tournament.noms_equipes %}
+                        <option value="{{ loop.index0 }}">{{ team }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="score2">Score de l'équipe 2 :</label>
+                <input type="number" id="score2" name="score2" required>
+            </div>
+            <div class="form-group">
+                <label for="game_date">Date du Match :</label>
+                <input type="date" id="game_date" name="game_date" required>
+            </div>
+            <input type="hidden" name="tournament_index" value="{{ tournament_index }}">
+            <button type="submit">Planifier le Match</button>
+        </form>
+    </div>
+</body>
+</html>
